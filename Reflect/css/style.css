@@ -1,0 +1,164 @@
+
+*{
+    margin : 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    box-sizing: border-box;
+}
+
+.container{
+    width: 100%;
+    height: 100vh;
+    background-image: linear-gradient(rgba(176, 115, 156, 0.8), rgba(221, 124, 155, 0.6), rgba(246, 148, 155, 0.6)), url(bg_img_calm.jpg);
+    background-position: left;
+    background-size: contain ;
+    background-repeat: no-repeat;
+    position: relative;
+}   
+
+.form-box{
+    width: 90%;
+    max-width: 400px;
+    position: absolute;
+    border-radius: 10px;
+    top: 50%;
+    left : 70%;
+    transform: translate(-50%, -50%);
+    background: #fff;
+    padding: 50px, 60px, 70px ;
+    text-align: center;
+
+}
+
+.form-box h1{
+    font-size: 30px;
+    margin-top: 20px;
+    margin-bottom: 40px ;
+    color: #900C3F;
+    position: relative;
+}
+
+.form-box h1::after{
+    content: " ";
+    width: 30px;
+    height: 4px;
+    background:#F7ABA4;
+    border-radius: 3px;
+    position: absolute;
+    bottom: -12px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.input-field{
+    background: rgba(246, 148, 155, 0.5);
+    margin: 15px ;
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    max-height: 65px;
+    transition: max-height 0.5s;
+    overflow: hidden;
+}
+
+input{
+    width: 100%;
+    background: transparent;
+    border: 0;
+    outline:0;
+    padding: 18px 15px;
+
+
+}
+
+.input-field i{
+    margin-left: 15px;
+    color: #756180;
+
+}
+.btn-submit button{
+    flex-basis: 48%;
+    background: #FF6D90;
+    width: 90%;
+    color: #fff;
+    outline: 0;
+    height: 40px;
+    margin-bottom: 30px ;
+    border-radius: 15px;
+    border: 0;
+    cursor: pointer;
+    transition: background 1s;
+}
+
+.btn-field button{
+    font-size: 18px;
+    flex-basis: 48%;
+    background: #7f2338;
+    width: 150px;
+    color: #fff;
+    outline: 0;
+    height: 40px;
+    margin-top: 30px ;
+    margin-right: -5px;
+    border: 0;
+    cursor: pointer;
+    transition: background 1s;
+}
+
+#signupBtn {
+    border-radius: 15px 0px 0px 15px;
+}
+
+#signinBtn {
+    border-radius: 0px 15px 15px 0px;
+}
+.btn-field button.disable{
+    background: #DADADA;
+    color: #717171;
+}
+
+.social-container {
+	margin: 20px 0;
+    
+}
+
+.social-container a {
+	border: 1px solid #DDDDDD;
+    background-color: rgba(257, 124, 155, 0.5);
+	border-radius: 50%;
+	display: inline-flex;
+	justify-content: center;
+	align-items: center;
+	margin: 0 5px;
+	height: 50px;
+	width: 50px;
+}
+
+/*Name: Pearly Purple
+Hex: #B0739C
+rgba(176, 115, 156)
+CMYK: 0, 0.346, 0.113, 0.309
+SHIMMERING BLUSH	
+Name: Shimmering Blush
+Hex: #DD7C9B
+rgba(221, 124, 155)
+AMERICAN PINK	
+Name: American Pink
+Hex: #F6949B
+rgba(246, 148, 155)
+MAUVELOUS	
+Name: Mauvelous
+Hex: #F7ABA4
+rgba(247, 171, 164)
+CMYK: 0, 0.307, 0.336, 0.031
+APRICOT	
+Name: Apricot
+Hex: #F7C9B5
+rgba(247, 201, 181)
+CMYK: 0, 0.186, 0.267, 0.031
+OLD LAVENDER	
+Name: Old Lavender
+Hex: #756180
+rgba(117, 97, 128)
+=======
+*/
