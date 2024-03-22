@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name = "viewport" content = "width = device - width, initial-scale = 1.0">
+        <meta charset="UTF-8">
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Reflect</title>
+        <link rel = "stylesheet" href = "css\journalstyle.css">
+        <script src="https://kit.fontawesome.com/4f078c44fb.js" crossorigin="anonymous"></script>
+        
+
+    </head>
+    <main>
+        <div class = "parentContainer">
+            <div class="toDoContainer">
+                <header>
+                    <h1>To-do List</h1>
+                    <form id="new-task-form">
+                        <div class="new-task-input">
+                            <i class="fa-solid fa-pen"></i>
+                            <input 
+                                type="text" 
+                                id = "new-task"
+                                required 
+                                name="new-task-input" 
+                                placeholder="I need to do .." />
+                        </div>
+                        <input 
+                            type="submit"
+                            id="new-task-submit" 
+                            value="Add task" />
+                    </form>
+                </header>
+                <section class="task-list">
+                    <h2>Tasks</h2>    
+                    <div id="tasks"></div>
+                </section>
+            </div>
+            <div class="journalContainer">
+                <h2>What's on your mind today ?</h2>
+                <form id="diary-entry-form">
+                    <textarea
+                        id = "new-diary-entry"
+                        name="new-diary-entry" 
+                        rows="20" cols="50"
+                        > 
+                    </textarea>
+                    <button id="btn-diary-submit" class = "btn-submit">
+                        Save
+                    </button>
+                </form>
+            </div>
+            <div class="statsContainer">
+                <div class="stats">
+                    Today's Statistics
+                </div>
+                <div class = "btn-stats">
+                    
+                    <div class="water">
+                        <i class="fa-solid fa-glass-water fa-xl"
+                            id = "btn-stats-water" 
+                            onclick="count_water_icons()">
+                        </i>   
+                        <span class="cross">X</span>
+                        <span class="cross" id="count-water-icons" style="font-size:xx-large; margin-top: 8px;">0</span>    
+                        <div style="font-size: large; padding: 20px; margin-top: 5px;">Water Break</div>
+                        <div class="switch-field">
+                            <input type="radio" id="water-15" name="switch-two" value="15-min" checked/>
+                            <label for="water-15">15 mins</label>
+                          <input type="radio" id="water-30" name="switch-two" value="30-min" onclick="showModal()" />
+                            <label for="water-30">30 mins</label>
+                            <input type="radio" id="water-1" name="switch-two" value="1-hr"/>
+                            <label for="water-1">1 hour</label>
+                            <input type="radio" id="water-2" name="switch-two" value="2-hrs" />
+                            <label for="water-2">2 hours</label>
+                        </div>  
+                    
+                    <div class="walk">
+                        <i class="fa-solid fa-stopwatch fa-xl"
+                            id = "btn-stats-walk"
+                            onclick="count_walk_icons()">
+                        </i>
+                        <span class="cross">X</span>
+                        <span class="cross" id="count-walk-icons" style="font-size:xx-large; margin-top: 8px;">0</span>                         
+                        <div style="font-size: large; padding: 20px; margin-top: 5px;">Walk Break</div>
+                        <div class="switch-field">
+                            <input type="radio" id="walk-15" name="switch-wo" value="15-min" checked/>
+                            <label for="walk-15">15 mins</label>
+                            <input type="radio" id="walk-30" name="switch-wo" value="30-min" />
+                            <label for="walk-30">30 mins</label>
+                            <input type="radio" id="walk-1" name="switch-wo" value="1-hr"/>
+                            <label for="walk-1">1 hour</label>
+                            <input type="radio" id="walk-2" name="switch-wo" value="2-hrs" />
+                            <label for="walk-2">2 hours</label>
+                        </div> 
+                        
+                    </div>
+                    
+                
+                </div>
+            </div>
+            
+        </div>
+    <div id="my_modal"> 
+                <center>
+                    <h2>
+                        Its time to take a water break !
+                    </h2>
+                    <img src="css/water-glass.png", alt="A glass of water">
+                    <div class = "btn-field">
+                        <button type = "button" id = "closeModalBtn" onclick="closeModal()"> Okay </button>
+                        <button type = "button" id = "okModalBtn" onclick="closeModal()"> Remind Me Later </button>
+                    </div>
+                </center>
+            </div>
+
+        <!-- <a href="#" class="modal-trigger" data-modal="modal-name">Modal open!</a> 
+            <div class="modal" id="modal-name">
+                <div class="modal-sandbox"></div>
+                <div class="modal-box">
+                    <div class="modal-header">
+                        <div class="close-modal">&#10006;</div> 
+                        <h1>Simple modal box</h1>
+                    </div>
+                    <div class="modal-body">
+                        <p>Lorem ipsum dociendis sint error, repellat ut soluta doloremque, accusamus vitae placeat?</p>
+                        <button class="close-modal">Close!</button>
+                    </div>
+                </div>
+            </div> -->
+    </main>
+
+
+
+        <script type="module">
+            // Import the functions you need from the SDKs you need
+            import { initializeApp } from "https://www.gstatic.com/firebasejs/9.16.0/firebase-app.js";
+            import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.16.0/firebase-analytics.js";
+            import { getFirestore, collection, addDoc, doc, deleteDoc, getDocs} from "https://www.gstatic.com/firebasejs/9.16.0/firebase-firestore.js";
+            // TODO: Add SDKs for Firebase products that you want to use
+            // https://firebase.google.com/docs/web/setup#available-libraries
+        
+            // Your web app's Firebase configuration
+            // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+            const firebaseConfig = {
+            apiKey: "AIzaSyDr90uHLKuWDiKWEwtC95ciSvAsrAK51zM",
+            authDomain: "reflect-30964.firebaseapp.com",
+            databaseURL: "https://reflect-30964-default-rtdb.firebaseio.com",
+            projectId: "reflect-30964",
+            storageBucket: "reflect-30964.appspot.com",
+            messagingSenderId: "58214232785",
+            appId: "1:58214232785:web:585f4d3c638941d18a8bf0",
+            measurementId: "G-NQZ33JP9X8"
+            };
+        
+            // Initialize Firebase
+            const app = initializeApp(firebaseConfig);
+            const analytics = getAnalytics(app);
+            const db = getFirestore(app);
+
+            async function read_data(email){
+                const read_tasks = [];
+                const read_diary = [];
+                const querySnapshot = await getDocs(collection(db, email + '/todo-items/' + 'unfinished'));
+                const getDiary = await getDocs(collection(db, email + '/diary_entry/' + 'unfinished'));
+                querySnapshot.forEach((doc) => {
+                console.log(`${doc.data().text}`);
+                read_tasks.push(doc.data().text);
+                });
+
+                getDiary.forEach((doc) => {
+                console.log(`${doc.data().text}`);
+                read_diary.push(doc.data().text);
+                });
+                console.log(read_diary);
+                //console.log([read_tasks, read_diary]);
+                return [read_tasks, read_diary];
+            }
+
+            (async function(){              
+                const saved = await read_data(email);
+                const read_tasks = saved[0];
+                const read_diary = saved[1];
+                console.log(read_tasks);               
+                console.log(read_diary);
+                document.getElementById("new-diary-entry").value += read_diary;
+                const input = document.getElementById("new-task");
+                const list_el = document.querySelector("#tasks");
+                for(var task of read_tasks){
+                    if (task != ''){
+                    const task_el = document.createElement('div');
+                    task_el.classList.add('task');
+            
+                    const task_content_el = document.createElement('div');
+                    task_content_el.classList.add('content');
+            
+                    task_el.appendChild(task_content_el);
+            
+                    const task_input_el = document.createElement('input');
+                    task_input_el.classList.add('text');
+                    task_input_el.type = 'text';
+                    task_input_el.value = task;
+                    task_input_el.setAttribute('readonly', 'readonly');
+            
+                    task_content_el.appendChild(task_input_el);
+            
+                    const task_actions_el = document.createElement('div');
+                    task_actions_el.classList.add('actions');
+                    
+                    const task_edit_el = document.createElement('button');
+                    task_edit_el.classList.add('edit');
+                    task_edit_el.innerText = 'Edit';
+            
+                    const task_delete_el = document.createElement('button');
+                    task_delete_el.classList.add('delete');
+                    task_delete_el.innerText = 'Delete';
+            
+                    task_actions_el.appendChild(task_edit_el);
+                    task_actions_el.appendChild(task_delete_el);
+            
+                    task_el.appendChild(task_actions_el);
+            
+                    list_el.appendChild(task_el);
+            
+                    input.value = '';
+                    task_edit_el.addEventListener('click', (e) => {
+                        if (task_edit_el.innerText.toLowerCase() == "edit") {
+                            task_edit_el.innerText = "Save";
+                            task_input_el.removeAttribute("readonly");
+                            task_input_el.focus();
+                        } 
+                        else {
+                            task_edit_el.innerText = "Edit";
+                            task_input_el.setAttribute("readonly", "readonly");
+                        }
+                    });
+            
+                    task_delete_el.addEventListener('click', (e) => {
+                        list_el.removeChild(task_el);
+                    });
+                }
+                    
+                };
+                
+            }
+        )();
+            
+            window.onload = function(){
+                read_data(email);
+            }
+
+            document.getElementById("new-task-submit").addEventListener('click', function(){
+                const form = document.querySelector("#new-task-form");
+                const input = document.getElementById("new-task");
+                const list_el = document.querySelector("#tasks");
+                const task = input.value;
+                console.log(task)
+                try {
+                    addDoc(collection(db, email + '/todo-items/' + 'unfinished'), {
+                        text : task,
+                        status : "active",
+                    });
+                    alert("Saved successfully!!");
+                }
+                catch(error){
+                        const errorCode = error.code;
+                        const errorMessage = error.message;
+                        // ..
+                        //console.log(errorCode + errorMessage)
+                        alert(errorMessage);
+                    };                
+            })
+
+            document.getElementById("btn-diary-submit").addEventListener('click', function(){
+                //e.preventDefault();
+                const input = document.getElementById("new-diary-entry");
+                const task = input.value;
+                console.log(input)
+                try {
+                    addDoc(collection(db, email + '/diary_entry/' + 'unfinished'), {
+                        text : task,
+                        status : "active",
+                    });
+                    alert("Saved successfully!!");
+                }
+                catch(error){
+                        const errorCode = error.code;
+                        const errorMessage = error.message;
+                        // ..
+                        //console.log(errorCode + errorMessage)
+                        alert(errorMessage);
+                    };
+
+                
+            })
+            /*window.onload = function(read_diary){
+                const my_diary = read_diary;
+                const text_area = document.getElementById("new-diary-entry");
+                text_area.appendChild(my_diary);
+            }*/
+            
+            
+            
+            
+        </script>
+        <script>
+            const email = localStorage.getItem('email');
+        </script>
+        <script src="js/journaljs.js" ></script>
+    </body>
+
+</html>
